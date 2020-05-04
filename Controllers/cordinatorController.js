@@ -264,7 +264,17 @@ exports.getSubjects = async (req, res, next) => {
     catchErr(err);
   }
 };
-
+exports.deleteSubject = async (req, res, next) => {
+  try {
+    const { _id } = req.headers;
+    const deletedSubject = await Subject.findByIdAndDelete({ _id });
+    res.status(200).json({
+      status: "success",
+    });
+  } catch (err) {
+    catchErr(err, res);
+  }
+};
 //Students
 const multerStudentStorage = multer.memoryStorage();
 const multerStudentFilter = (req, file, cb) => {

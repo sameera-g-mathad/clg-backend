@@ -22,7 +22,8 @@ router
 router
   .route("/subjects")
   .get(cordinatorController.getSubjects)
-  .post(cordinatorController.createSubject);
+  .post(cordinatorController.createSubject)
+  .delete(cordinatorController.deleteSubject);
 
 router
   .route("/students")
