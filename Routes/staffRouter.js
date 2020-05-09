@@ -7,8 +7,8 @@ const router = express.Router();
 router.route("/").post(authController.login);
 //router.route("/").get(authController.protect,staffController.getStaff)
 router.route("/").get(staffController.getTeacherbyId);
-//router.route("/set-paper").get(paperController.findpapers);
-router.post("/set-paper/questions", paperController.addPaper);
+router.route("/set-paper").get(paperController.getInternalsDetails);
+router.route("/set-paper/questions").post(paperController.addPaper);
 router.route("/students").get(staffController.getStudents);
 router
   .route("/students/internals1/:usn")

@@ -51,3 +51,31 @@ exports.findpapers = async (req, res, next) => {
     });
   }
 };
+exports.getInternalsDetails = async (req, res, next) => {
+  try {
+    const {
+      subject,
+      subjectcode: subjectCode,
+      dept,
+      sem,
+      section,
+      teacherid: teacherId,
+    } = req.headers;
+    const found = await QuestionPaper.find({
+      subject,
+      subjectCode,
+      dept,
+      sem,
+      section,
+      teacherId,
+    }).select({ internals: 1 });
+    res.status(200).json({
+      status: "success",
+      found,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+    });
+  }
+};
