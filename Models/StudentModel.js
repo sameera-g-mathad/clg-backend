@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const bcrypt = require("bcryptjs");
 const studentSchema = new mongoose.Schema({
   studentName: {
     type: String,
@@ -20,6 +20,17 @@ const studentSchema = new mongoose.Schema({
     required: true,
     maxlength: 3,
     uppercase: true,
+  },
+  password: {
+    type: String,
+    requrired: true,
+    maxlength: 10,
+    select:false
+  },
+  dob: {
+    type: String,
+    required: true,
+    maxlength: 10,
   },
   year: {
     type: Number,
@@ -133,5 +144,10 @@ const studentSchema = new mongoose.Schema({
     select: false,
   },
 });
+studentSchema.pre("save", async function(next) {
+  this.password = await bcrypt.hash(this.dob, 12);
+  next();
+});
 const Student = mongoose.model("Student", studentSchema);
+
 module.exports = Student;

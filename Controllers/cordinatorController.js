@@ -308,12 +308,13 @@ exports.studentPhotoRead = (req, res, next) => {
 exports.createStudent = async (req, res, next) => {
   try {
     //console.log(req.body);
-    const { studentName, studentUsn, dept, year, sem, section } = req.body;
+    const { studentName, studentUsn, dept, dob, year, sem, section } = req.body;
     const image = req.file.image;
     const newStudent = await Student.create({
       studentName,
       studentUsn,
       dept,
+      dob,
       year,
       sem,
       section,
@@ -338,6 +339,7 @@ exports.getStudents = async (req, res, next) => {
         studentName: 1,
         studentUsn: 1,
         dept: 1,
+        dob: 1,
         year: 1,
         sem: 1,
         section: 1,

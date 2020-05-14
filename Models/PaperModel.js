@@ -55,11 +55,15 @@ const paperSchema = new mongoose.Schema({
       co: {
         type: String,
         maxlength: 3,
-        required: true
+        
       },
       subquestions: [
         {
-          type: Number
+          subquestions:Number,
+          subco:{
+            type:String,
+            uppercase:true
+          }
         }
       ]
     }
