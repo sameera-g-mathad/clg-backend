@@ -22,4 +22,6 @@ router
   .route("/students/internals3/:usn")
   .get(paperController.findpapers)
   .patch(staffController.updateInternals3);
+
+router.route("/co-analysis/:id").get(paperController.getPapers)
 module.exports = router;

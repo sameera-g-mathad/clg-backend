@@ -79,3 +79,19 @@ exports.getInternalsDetails = async (req, res, next) => {
     });
   }
 };
+exports.getPapers = async (req, res, next) => {
+  try {
+    console.log(req.headers);
+    const { teacherid: teacherId, subject } = req.headers;
+    const Internals = await QuestionPaper.find({ teacherId, subject });
+
+    res.status(200).json({
+      status: "success",
+      Internals,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+    });
+  }
+};
