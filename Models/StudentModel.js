@@ -25,7 +25,7 @@ const studentSchema = new mongoose.Schema({
     type: String,
     requrired: true,
     maxlength: 10,
-    select:false
+    select: false,
   },
   dob: {
     type: String,
@@ -70,7 +70,9 @@ const studentSchema = new mongoose.Schema({
           co: {
             type: String,
             maxlength: 3,
-            required: true,
+          },
+          attended: {
+            type: Boolean,
           },
           subquestions: [
             {
