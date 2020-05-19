@@ -100,7 +100,9 @@ const studentSchema = new mongoose.Schema({
           co: {
             type: String,
             maxlength: 3,
-            required: true,
+          },
+          attended: {
+            type: Boolean,
           },
           subquestions: [
             {
@@ -128,7 +130,9 @@ const studentSchema = new mongoose.Schema({
           co: {
             type: String,
             maxlength: 3,
-            required: true,
+          },
+          attended: {
+            type: Boolean,
           },
           subquestions: [
             {
