@@ -57,6 +57,7 @@ const studentSchema = new mongoose.Schema({
   internals1: [
     {
       subject: String,
+      sem:Number,
       performance: [
         {
           questionNumber: {
@@ -87,6 +88,7 @@ const studentSchema = new mongoose.Schema({
   internals2: [
     {
       subject: String,
+      sem:Number,
       performance: [
         {
           questionNumber: {
@@ -117,6 +119,7 @@ const studentSchema = new mongoose.Schema({
   internals3: [
     {
       subject: String,
+      sem:Number,
       performance: [
         {
           questionNumber: {
