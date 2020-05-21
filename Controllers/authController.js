@@ -1,6 +1,7 @@
 const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/appError");
 const Staff = require("./../Models/StaffModel");
+const Student = require("./../Models/StudentModel");
 const jwt = require("jsonwebtoken");
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
@@ -30,3 +31,10 @@ exports.login = catchAsync(async (req, res, next) => {
 
 //     }
 // })
+
+exports.studentLogin = async (req, res, next) => {
+  try {
+    const { studentUsn, password } = req.body;
+    console.log(studentUsn, password);
+  } catch (err) {}
+};

@@ -73,6 +73,7 @@ exports.updateInternals1 = async (req, res, next) => {
         $push: {
           internals1: {
             subject: internals1.subject,
+            sem: internals1.sem,
             performance: internals1.performance,
             marks: internals1.marks,
           },
@@ -99,6 +100,7 @@ exports.updateInternals2 = async (req, res, next) => {
         $push: {
           internals2: {
             subject: internals2.subject,
+            sem: internals2.sem,
             performance: internals2.performance,
             marks: internals2.marks,
           },
@@ -124,6 +126,7 @@ exports.updateInternals3 = async (req, res, next) => {
         $push: {
           internals3: {
             subject: internals3.subject,
+            sem: internals3.sem,
             performance: internals3.performance,
             marks: internals3.marks,
           },

@@ -11,6 +11,7 @@ const fs = require("fs");
 //routers
 const staffRouter = require("./Routes/staffRouter");
 const cordinatorRouter = require("./Routes/cordinatorRouter");
+const studentRouter = require("./Routes/studentRouter");
 const path = require("path");
 const globalerrhandler = require("./Controllers/errorcontroller");
 
@@ -36,6 +37,8 @@ app.use("/cordinator", cordinatorRouter);
 
 app.use("/staff", staffRouter);
 app.use("/staff-login", staffRouter);
+
+app.use("/student-login", studentRouter);
 
 app.use(globalerrhandler);
 module.exports = app;
