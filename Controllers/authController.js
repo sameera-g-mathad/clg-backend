@@ -33,8 +33,23 @@ exports.login = catchAsync(async (req, res, next) => {
 // })
 
 exports.studentLogin = async (req, res, next) => {
-  try {
-    const { studentUsn, password } = req.body;
-    console.log(studentUsn, password);
-  } catch (err) {}
+  const { studentUsn, password } = req.body;
+  console.log(studentUsn, password);
+  if (!studentUsn || !password)
+    return next(new AppError("Invalid details", 404));
+  const student = await Student.findOne({ studentUsn }).select("+password");
+  if (!student || (await student.check(password, student.password)))
+    return next(new AppError("Invalid details", 404));
+  const studentToken =
+    "Student " +
+    jwt.sign({ id: student._id }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRES,
+    });
+  student.password = undefined;
+  res.status(200).json({
+    status: "success",
+    studentToken,
+    student,
+  });
+
 };

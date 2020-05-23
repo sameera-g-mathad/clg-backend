@@ -57,7 +57,7 @@ const studentSchema = new mongoose.Schema({
   internals1: [
     {
       subject: String,
-      sem:Number,
+      sem: Number,
       performance: [
         {
           questionNumber: {
@@ -88,7 +88,7 @@ const studentSchema = new mongoose.Schema({
   internals2: [
     {
       subject: String,
-      sem:Number,
+      sem: Number,
       performance: [
         {
           questionNumber: {
@@ -119,7 +119,7 @@ const studentSchema = new mongoose.Schema({
   internals3: [
     {
       subject: String,
-      sem:Number,
+      sem: Number,
       performance: [
         {
           questionNumber: {
@@ -157,6 +157,9 @@ studentSchema.pre("save", async function(next) {
   this.password = await bcrypt.hash(this.dob, 12);
   next();
 });
+studentSchema.methods.check = async function(entered, stored) {
+  return await bcrypt.compare(entered, stored);
+};
 const Student = mongoose.model("Student", studentSchema);
 
 module.exports = Student;
