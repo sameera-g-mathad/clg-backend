@@ -58,6 +58,10 @@ const studentSchema = new mongoose.Schema({
     {
       subject: String,
       sem: Number,
+      subjectCode: {
+        type: String,
+        uppercase: true,
+      },
       performance: [
         {
           questionNumber: {
@@ -89,6 +93,10 @@ const studentSchema = new mongoose.Schema({
     {
       subject: String,
       sem: Number,
+      subjectCode: {
+        type: String,
+        uppercase: true,
+      },
       performance: [
         {
           questionNumber: {
@@ -120,6 +128,10 @@ const studentSchema = new mongoose.Schema({
     {
       subject: String,
       sem: Number,
+      subjectCode: {
+        type: String,
+        uppercase: true,
+      },
       performance: [
         {
           questionNumber: {

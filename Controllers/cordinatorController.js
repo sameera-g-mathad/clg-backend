@@ -335,17 +335,7 @@ exports.createStudent = async (req, res, next) => {
 exports.getStudents = async (req, res, next) => {
   try {
     const Students = await Student.find()
-      .select({
-        studentName: 1,
-        studentUsn: 1,
-        dept: 1,
-        dob: 1,
-        year: 1,
-        sem: 1,
-        section: 1,
-        photo: 1,
-      })
-      .sort({ studentUsn: 1 });
+    .sort({ studentUsn: 1 });
     res.status(200).json({
       status: "success",
       Students,
