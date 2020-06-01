@@ -38,7 +38,7 @@ exports.studentLogin = async (req, res, next) => {
   if (!studentUsn || !password)
     return next(new AppError("Invalid details", 404));
   const student = await Student.findOne({ studentUsn }).select("+password");
-  if (!student || (await student.check(password, student.password)))
+  if (!student || !(await student.check(password, student.password)))
     return next(new AppError("Invalid details", 404));
   const studentToken =
     "Student " +
@@ -51,5 +51,4 @@ exports.studentLogin = async (req, res, next) => {
     studentToken,
     student,
   });
-
 };
