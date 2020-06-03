@@ -72,10 +72,7 @@ const studentSchema = new mongoose.Schema({
             type: Number,
             required: true,
           },
-          co: {
-            type: String,
-            maxlength: 3,
-          },
+
           attended: {
             type: Boolean,
           },
@@ -107,10 +104,7 @@ const studentSchema = new mongoose.Schema({
             type: Number,
             required: true,
           },
-          co: {
-            type: String,
-            maxlength: 3,
-          },
+
           attended: {
             type: Boolean,
           },
@@ -130,7 +124,6 @@ const studentSchema = new mongoose.Schema({
       sem: Number,
       subjectCode: {
         type: String,
-        uppercase: true,
       },
       performance: [
         {
@@ -141,10 +134,6 @@ const studentSchema = new mongoose.Schema({
           question: {
             type: Number,
             required: true,
-          },
-          co: {
-            type: String,
-            maxlength: 3,
           },
           attended: {
             type: Boolean,

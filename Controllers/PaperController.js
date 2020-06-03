@@ -94,3 +94,32 @@ exports.getPapers = async (req, res, next) => {
     });
   }
 };
+
+exports.getPaperforStudent = async (req, res, next) => {
+  try {
+    const {
+      subject,
+      subjectcode: subjectCode,
+      section,
+      sem,
+      internal: internals,
+    } = req.headers;
+    console.log(subject, subjectCode, section, sem, internals);
+    const found = await QuestionPaper.findOne({
+      subject,
+      subjectCode,
+      section,
+      sem,
+      internals,
+    });
+    if (!found) return next(new AppError("Something went wrong!!", 404));
+    res.status(200).json({
+      status: "success",
+      found,
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+    });
+  }
+};

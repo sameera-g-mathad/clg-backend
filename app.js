@@ -39,6 +39,7 @@ app.use("/staff", staffRouter);
 app.use("/staff-login", staffRouter);
 
 app.use("/student-login", studentRouter);
+app.use("/student", studentRouter);
 
 app.use(globalerrhandler);
 module.exports = app;
