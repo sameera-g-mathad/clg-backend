@@ -34,7 +34,7 @@ app.use(xss());
 app.use(hpp());
 
 app.use("/cordinator", cordinatorRouter);
-// app.use("/cordinator-login", cordinatorRouter);
+app.use("/cordinator-login", cordinatorRouter);
 app.use("/staff", staffRouter);
 app.use("/staff-login", staffRouter);
 

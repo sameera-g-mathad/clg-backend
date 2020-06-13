@@ -1,9 +1,9 @@
 const express = require("express");
 const cordinatorController = require("./../Controllers/cordinatorController");
 const router = express.Router();
-// const authController = require("./../Controllers/authController");
+const authController = require("./../Controllers/authController");
 
-// router.route("/");
+router.route("/").post(authController.cordinatorlogin);
 router
   .route("/staff")
   .get(cordinatorController.getStaff)
@@ -36,6 +36,7 @@ router
     cordinatorController.studentPhotoRead,
     cordinatorController.createStudent
   )
-  .delete(cordinatorController.deleteStudent).patch(cordinatorController.updateStudent);
+  .delete(cordinatorController.deleteStudent)
+  .patch(cordinatorController.updateStudent);
 
 module.exports = router;
