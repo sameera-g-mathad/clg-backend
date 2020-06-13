@@ -36,6 +36,6 @@ router
     cordinatorController.studentPhotoRead,
     cordinatorController.createStudent
   )
-  .delete(cordinatorController.deleteStudent);
+  .delete(cordinatorController.deleteStudent).patch(cordinatorController.updateStudent);
 
 module.exports = router;

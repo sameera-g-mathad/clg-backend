@@ -14,13 +14,15 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!staff || !(await staff.checkPassword(password, staff.password)))
     return next(new AppError("Incorrect email or password", 401));
 
-  const token = jwt.sign({ id: staff._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES,
-  });
+  const teacherToken =
+    "Teacher" +
+    jwt.sign({ id: staff._id }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRES,
+    });
   staff.password = undefined;
   res.status(200).json({
     status: "success",
-    token,
+    teacherToken,
     staff,
   });
 });

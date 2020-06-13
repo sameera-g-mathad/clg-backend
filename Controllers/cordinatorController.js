@@ -369,3 +369,13 @@ exports.deleteStudent = async (req, res, next) => {
     catchErr(err, res);
   }
 };
+exports.updateStudent = async (req, res, next) => {
+  try {
+    console.log(req.body);
+    const { _id, updatestudentSem: sem, updatestudentYear: year } = req.body;
+    const updated = await Student.findByIdAndUpdate(_id, { year, sem });
+    res.status(200).json({ status: "success" });
+  } catch (err) {
+    res.status(404).json({ status: "failed" });
+  }
+};
