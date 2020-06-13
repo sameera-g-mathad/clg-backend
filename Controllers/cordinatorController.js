@@ -5,6 +5,7 @@ const AppError = require("./../utils/appError");
 const multer = require("multer");
 const sharp = require("sharp");
 const fs = require("fs");
+const QuestionPaper = require("./../Models/PaperModel");
 //catch err
 catchErr = (err, res) => {
   res.status(404).json({
@@ -45,7 +46,7 @@ exports.readImage = (req, res, next) => {
 };
 exports.createStaff = async (req, res, next) => {
   try {
-    const { name, email, dept } = req.body;
+    const { name, email, dept, cordinator } = req.body;
     const image = req.file.image;
     if (!name || !email || !dept)
       return next(new AppError("Insufficient details", 406));
@@ -53,6 +54,7 @@ exports.createStaff = async (req, res, next) => {
       name,
       email,
       dept,
+      cordinator,
       photo: {
         data: image,
         contentType: "image/jpeg",
@@ -132,6 +134,7 @@ exports.deleteSubjects = async (req, res, next) => {
     const teacher = await Staff.findByIdAndUpdate(id, {
       $unset: { subject1_Id: "", subject1: "", subject2_Id: "", subject2: "" },
     });
+    const deleted = await QuestionPaper.deleteMany({ teacherId: id });
     res.status(200).json({
       status: "success",
     });
@@ -217,6 +220,7 @@ exports.deleteTeacher = async (req, res, next) => {
       });
     }
     const deleted = await Staff.findByIdAndDelete(id);
+    const deletedPapers = await QuestionPaper.deleteMany({ teacherId: id });
     res.status(204).json({
       status: "success",
     });
@@ -308,9 +312,19 @@ exports.studentPhotoRead = (req, res, next) => {
 exports.createStudent = async (req, res, next) => {
   try {
     //console.log(req.body);
-    const { studentName, studentUsn, dept, dob, year, sem, section } = req.body;
+    const {
+      studentEmail,
+      studentName,
+      studentUsn,
+      dept,
+      dob,
+      year,
+      sem,
+      section,
+    } = req.body;
     const image = req.file.image;
     const newStudent = await Student.create({
+      studentEmail,
       studentName,
       studentUsn,
       dept,
@@ -334,8 +348,7 @@ exports.createStudent = async (req, res, next) => {
 };
 exports.getStudents = async (req, res, next) => {
   try {
-    const Students = await Student.find()
-    .sort({ studentUsn: 1 });
+    const Students = await Student.find().sort({ studentUsn: 1 });
     res.status(200).json({
       status: "success",
       Students,

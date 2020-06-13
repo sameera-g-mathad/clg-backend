@@ -1,7 +1,9 @@
 const express = require("express");
 const cordinatorController = require("./../Controllers/cordinatorController");
 const router = express.Router();
+// const authController = require("./../Controllers/authController");
 
+// router.route("/");
 router
   .route("/staff")
   .get(cordinatorController.getStaff)

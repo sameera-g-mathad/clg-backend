@@ -30,6 +30,9 @@ const staffSchema = new mongoose.Schema({
     data: Buffer,
     contentType: String,
   },
+  cordinator: {
+    type: Boolean,
+  },
   subject1_Id: {
     type: mongoose.Schema.ObjectId,
     ref: "Subjects",
