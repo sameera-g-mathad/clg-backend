@@ -7,6 +7,7 @@ const hpp = require("hpp");
 const helmet = require("helmet");
 const ratelimit = require("express-rate-limit");
 const mongosanitize = require("express-mongo-sanitize");
+const cookieParser = require("cookie-parser");
 const fs = require("fs");
 //routers
 const staffRouter = require("./Routes/staffRouter");
@@ -22,6 +23,7 @@ app.use(helmet());
 app.use(express.json());
 
 app.use(cors());
+app.use(cookieParser());
 app.use(morgan("dev"));
 const limiter = ratelimit({
   max: 500,

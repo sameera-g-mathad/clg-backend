@@ -75,10 +75,20 @@ exports.cordinatorlogin = async (req, res, next) => {
     )
       return next(new AppError("Invalid details", 400));
     const cordinatorToken =
-      "Cordinator " +
+      "Cordinator" +
+      " " +
       jwt.sign({ id: cordinator._id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES,
       });
+    const cookieoptions = {
+      expires: new Date(
+        Date.now() + process.env.JWT_EXPIRES * 24 * 60 * 60 * 1000
+      ),
+      httpOnly: true,
+      //secure: true,
+    };
+    cordinator.password = undefined;
+    res.cookie("__cordinatorToken", cordinatorToken, cookieoptions);
     res.status(200).json({
       status: "success",
       cordinatorToken,
