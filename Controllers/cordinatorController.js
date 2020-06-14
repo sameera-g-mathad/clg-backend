@@ -108,8 +108,9 @@ exports.editStaff = async (req, res, next) => {
 };
 exports.getStaff = async (req, res, next) => {
   try {
-    const StaffDetails = await Staff.find().sort({ name: 1 });
-    if (!StaffDetails) return next(new AppError("sdfl", 404));
+    const { dept } = req.headers;
+    const StaffDetails = await Staff.find({ dept }).sort({ name: 1 });
+    if (!StaffDetails) return next(new AppError("No teachers available", 404));
 
     res.status(200).json({
       status: "success",
@@ -195,7 +196,7 @@ exports.getTeacher = async (req, res, next) => {
   try {
     const id = req.params.id;
     const Teacher = await Staff.findById(id);
-    if (!Teacher) return next(new AppError("No Teacher found", 404));
+    if (!Teacher) return next(new AppError("No Teachers found", 404));
 
     res.status(200).json({
       status: "success",
@@ -256,10 +257,13 @@ exports.createSubject = async (req, res, next) => {
 };
 exports.getSubjects = async (req, res, next) => {
   try {
-    const Subjects = await Subject.find()
+    const { dept } = req.headers;
+    const Subjects = await Subject.find({ dept })
       .sort({ sem: 1 })
       .sort({ section: 1 })
       .sort({ subjectCode: 1 });
+    if (Subjects.length === 0)
+      return next(new AppError("No subjects available", 404));
     res.status(200).json({
       status: "success",
       Subjects,
@@ -348,7 +352,10 @@ exports.createStudent = async (req, res, next) => {
 };
 exports.getStudents = async (req, res, next) => {
   try {
-    const Students = await Student.find().sort({ studentUsn: 1 });
+    const { dept } = req.headers;
+    const Students = await Student.find({ dept }).sort({ studentUsn: 1 });
+    if (Students.length === 0)
+      return next(new AppError("No students found", 404));
     res.status(200).json({
       status: "success",
       Students,
