@@ -6,37 +6,43 @@ const authController = require("./../Controllers/authController");
 router.route("/").post(authController.cordinatorlogin);
 router
   .route("/staff")
-  .get(cordinatorController.getStaff)
+  .get(authController.protectCordinator, cordinatorController.getStaff)
   .post(
+    authController.protectCordinator,
     cordinatorController.uploadImage,
     cordinatorController.resizeImage,
     cordinatorController.readImage,
     cordinatorController.createStaff
   )
-  .patch(cordinatorController.deleteSubjects)
-  .delete(cordinatorController.deleteTeacher);
+  .patch(authController.protectCordinator, cordinatorController.deleteSubjects)
+  .delete(authController.protectCordinator, cordinatorController.deleteTeacher);
 
 router
   .route("/staff/:id")
-  .get(cordinatorController.getSubject, cordinatorController.getTeacher)
-  .patch(cordinatorController.editStaff);
+  .get(
+    authController.protectCordinator,
+    cordinatorController.getSubject,
+    cordinatorController.getTeacher
+  )
+  .patch(authController.protectCordinator, cordinatorController.editStaff);
 
 router
   .route("/subjects")
-  .get(cordinatorController.getSubjects)
-  .post(cordinatorController.createSubject)
-  .delete(cordinatorController.deleteSubject);
+  .get(authController.protectCordinator, cordinatorController.getSubjects)
+  .post(authController.protectCordinator, cordinatorController.createSubject)
+  .delete(authController.protectCordinator, cordinatorController.deleteSubject);
 
 router
   .route("/students")
-  .get(cordinatorController.getStudents)
+  .get(authController.protectCordinator, cordinatorController.getStudents)
   .post(
+    authController.protectCordinator,
     cordinatorController.studentPhotoUpload,
     cordinatorController.studentPhotoResize,
     cordinatorController.studentPhotoRead,
     cordinatorController.createStudent
   )
-  .delete(cordinatorController.deleteStudent)
-  .patch(cordinatorController.updateStudent);
+  .delete(authController.protectCordinator, cordinatorController.deleteStudent)
+  .patch(authController.protectCordinator, cordinatorController.updateStudent);
 
 module.exports = router;

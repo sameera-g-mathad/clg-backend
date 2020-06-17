@@ -293,7 +293,7 @@ const studentPhoto = multer({
   storage: multerStudentStorage,
   fileFilter: multerStudentFilter,
   limits: {
-    fileSize: 1024 * 1024 * 5,
+    fileSize: 1024 * 1024 * 6,
   },
 });
 exports.studentPhotoUpload = studentPhoto.single("photo");
@@ -315,7 +315,6 @@ exports.studentPhotoRead = (req, res, next) => {
 };
 exports.createStudent = async (req, res, next) => {
   try {
-    //console.log(req.body);
     const {
       studentEmail,
       studentName,
