@@ -16,6 +16,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
   const teacherToken =
     "Teacher" +
+    " " +
     jwt.sign({ id: staff._id }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES,
     });
@@ -45,7 +46,8 @@ exports.studentLogin = async (req, res, next) => {
     if (!student || !(await student.check(password, student.password)))
       return next(new AppError("Invalid Usn or Password", 404));
     const studentToken =
-      "Student " +
+      "Student" +
+      " " +
       jwt.sign({ id: student._id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES,
       });
