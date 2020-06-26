@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const studentSchema = new mongoose.Schema({
-  studentEmail: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-  },
+  // studentEmail: {
+  //   type: String,
+  //   required: true,
+  //   unique: true,
+  //   trim: true,
+  // },
   studentName: {
     type: String,
     required: true,

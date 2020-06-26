@@ -27,6 +27,28 @@ exports.login = catchAsync(async (req, res, next) => {
     staff,
   });
 });
+exports.protectTeacher = async (req, res, next) => {
+  try {
+    let token;
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Teacher")
+    )
+      token = req.headers.authorization.split(" ")[1];
+    if (!token) {
+      return next(new AppError("Something went wrong", 401));
+    }
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    //console.log("hello", decoded);
+    const user = await Staff.findById(decoded.id);
+    if (!user) return next(new AppError("No user found", 401));
+    else next();
+  } catch (err) {
+    res.status(404).json({
+      status: "failed while processing",
+    });
+  }
+};
 // exports.protect=catchAsync(async(req,res,next)=>{
 //     let token;
 //     if(req.headers.authorization && req.headers.authorization.startsWith("Bearer"))
@@ -108,7 +130,7 @@ exports.protectCordinator = async (req, res, next) => {
       return next(new AppError("Something went wrong", 401));
     }
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-    console.log("hello", decoded);
+    //console.log("hello", decoded);
     const user = await Staff.findById(decoded.id);
     if (!user) return next(new AppError("No user found", 401));
     else next();

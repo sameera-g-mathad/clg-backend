@@ -27,11 +27,6 @@ const subjectSchema = new mongoose.Schema({
     maxlength: 1,
     uppercase: true,
   },
-  elective: {
-    type: Boolean,
-    required: true,
-    default: false,
-  },
   assigned: Boolean,
   createdAt: {
     type: Date,
