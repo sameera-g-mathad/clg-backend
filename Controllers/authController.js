@@ -195,4 +195,11 @@ sendmail = async (email, resetUrl) => {
     console.log("error", err);
   }
 };
-exports.setNewPassword = async () => {};
+exports.setNewPassword = async (req, res, next) => {
+  try {
+    const { resetToken } = req.params;
+    console.log(resetToken);
+  } catch (err) {
+    console.log(err);
+  }
+};
