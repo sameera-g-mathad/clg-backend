@@ -4,6 +4,7 @@ const Staff = require("./../Models/StaffModel");
 const Student = require("./../Models/StudentModel");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
+const crypto = require("crypto");
 const { promisify } = require("util");
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
@@ -198,7 +199,28 @@ sendmail = async (email, resetUrl) => {
 exports.setNewPassword = async (req, res, next) => {
   try {
     const { resetToken } = req.params;
-    console.log(resetToken);
+    const { password } = req.body;
+    //console.log(resetToken);
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    const user = await Staff.findOne({
+      passwordReset: hashedToken,
+      passwordExpires: { $gt: Date.now() },
+    });
+    if (!user) {
+      return next(new AppError("user not found", 404));
+    }
+    (user.password = password),
+      (user.passwordExpires = undefined),
+      (user.passwordReset = undefined);
+    await user.save();
+    res.status(200).json({
+      status: "success",
+      message: "password updated successfully",
+    });
   } catch (err) {
     console.log(err);
   }
