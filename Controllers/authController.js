@@ -3,6 +3,7 @@ const AppError = require("./../utils/appError");
 const Staff = require("./../Models/StaffModel");
 const Student = require("./../Models/StudentModel");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 const { promisify } = require("util");
 exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
@@ -152,13 +153,47 @@ exports.resetPassword = async (req, res, next) => {
     const resetToken = user.resetPasswordToken();
     console.log(resetToken);
     await user.save({ validateBeforeSave: false });
-
+    const resetUrl = `${req.protocol}://${req.get(
+      "host"
+    )} /resetPassword/${resetToken}`;
+    res.locals.resetUrl = resetUrl;
+    sendmail(user.email, resetUrl);
     res.status(200).json({
-      resetToken,
       status: "success",
     });
   } catch (err) {
     console.log(err);
+  }
+};
+sendmail = async (email, resetUrl) => {
+  try {
+    const transport = nodemailer.createTransport({
+      service: process.env.SERVICE,
+      port: process.env.EPORT,
+      auth: {
+        user: process.env.USER,
+        pass: process.env.EPASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.SERVER_MAIL,
+      to: email,
+      subject: "Reset Password",
+      html: `<div>
+          <h5>Hello</h5>
+          
+          <p>This message is from global academy of technology.The link below is for re-setting password as per your
+              request.
+              The link will expire in 5 minutes and once after changin your password you can login using your new
+              password.Never share your password with anyone. </p>
+          <a target="block" href="${resetUrl}">${resetUrl}</a>
+          <p style="color:red">Regards,<br>Global Academy Of Technology</p>
+      </div>`,
+    };
+    await transport.sendMail(mailOptions);
+  } catch (err) {
+    console.log("error", err);
   }
 };
 exports.setNewPassword = async () => {};
