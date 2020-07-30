@@ -153,10 +153,9 @@ exports.resetPassword = async (req, res, next) => {
     const resetToken = user.resetPasswordToken();
     console.log(resetToken);
     await user.save({ validateBeforeSave: false });
-    const resetUrl = `${req.protocol}://${req.get(
-      "host"
-    )} /resetPassword/${resetToken}`;
-    res.locals.resetUrl = resetUrl;
+    const url = req.get("host").split(":")[0];
+    const resethost = url + ":3000";
+    const resetUrl = `${req.protocol}://${resethost}/resetPassword/${resetToken}`;
     sendmail(user.email, resetUrl);
     res.status(200).json({
       status: "success",
