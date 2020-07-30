@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
 const staffSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -52,10 +53,11 @@ const staffSchema = new mongoose.Schema({
     type: Date,
     select: false,
   },
+  passwordReset: String,
+  passwordExpires: Date,
 });
 staffSchema.pre("save", async function(next) {
-  // if(!this.isModified("password"))
-  // return next()
+  if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 12);
   next();
 });
@@ -64,6 +66,17 @@ staffSchema.methods.checkPassword = async function(
   dbpassword
 ) {
   return await bcrypt.compare(enteredpassword, dbpassword);
+};
+
+staffSchema.methods.resetPasswordToken = function() {
+  const resetToken = crypto.randomBytes(32).toString("hex");
+  this.passwordReset = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+  this.passwordExpires = Date.now() + 5 * 60 * 1000;
+
+  return resetToken;
 };
 const Staff = mongoose.model("Staff", staffSchema);
 module.exports = Staff;
