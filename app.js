@@ -14,6 +14,7 @@ const staffRouter = require("./Routes/staffRouter");
 const cordinatorRouter = require("./Routes/cordinatorRouter");
 const studentRouter = require("./Routes/studentRouter");
 const path = require("path");
+const authController = require("./Controllers/authController");
 const globalerrhandler = require("./Controllers/errorcontroller");
 
 const app = express();
@@ -39,7 +40,7 @@ app.use("/cordinator", cordinatorRouter);
 app.use("/cordinator-login", cordinatorRouter);
 app.use("/staff", staffRouter);
 app.use("/staff-login", staffRouter);
-
+app.use("/resetPassword", authController.resetPassword);
 app.use("/student-login", studentRouter);
 app.use("/student", studentRouter);
 

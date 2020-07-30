@@ -140,3 +140,16 @@ exports.protectCordinator = async (req, res, next) => {
     });
   }
 };
+exports.resetPassword = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    console.log(email);
+    const user = await Staff.findOne({ email });
+    console.log(user);
+    if (!user) {
+      return next(new AppError("sorry email not found .", 404));
+    }
+    res.send("of");
+  } catch (err) {}
+};
+exports.setNewPassword = async () => {};
