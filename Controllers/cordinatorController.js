@@ -315,16 +315,7 @@ exports.studentPhotoRead = (req, res, next) => {
 };
 exports.createStudent = async (req, res, next) => {
   try {
-    const {
-      // studentEmail,
-      studentName,
-      studentUsn,
-      dept,
-      dob,
-      year,
-      sem,
-      section,
-    } = req.body;
+    const { studentName, studentUsn, dept, dob, year, sem, section } = req.body;
     const image = req.file.image;
     const newStudent = await Student.create({
       //studentEmail,
